@@ -13,7 +13,7 @@ const TrackSearchResult = ({ track, chooseTrack }) => {
     >
       <img
         src={track.albumUrl}
-        style={{ height: "100px", width: "100px" }}
+        style={{ height: "64px", width: "64px" }}
         alt={`${track.artist}/${track.title}`}
       />
       <div className='ml-3'>
