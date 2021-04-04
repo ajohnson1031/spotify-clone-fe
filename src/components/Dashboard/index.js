@@ -13,6 +13,7 @@ const Dashboard = ({ code }) => {
   const [playingTrack, setPlayingTrack] = useState();
   const [lyrics, setLyrics] = useState("");
   const [spotifyApi, setSpotifyApi] = useState();
+  const [loading, setLoading] = useState(true);
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
@@ -25,6 +26,7 @@ const Dashboard = ({ code }) => {
       const res = await axios.get(
         "https://spotify-clone-be.herokuapp.com/getID"
       );
+      setLoading(false);
       return setSpotifyApi(
         new SpotifyWebApi({
           clientId: res.data.clientId,
@@ -95,6 +97,7 @@ const Dashboard = ({ code }) => {
         style={{ padding: 10 }}
       />
       <div className='flex-grow-1 my-2' style={{ overflowY: "auto" }}>
+        {loading && <div className='preload'>Loading dynos...</div>}
         {searchResults.map((track) => {
           return (
             <TrackSearchResult
