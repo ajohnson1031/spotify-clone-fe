@@ -8,14 +8,14 @@ export default function useAuth(code) {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/login", { code })
+      .post("https://spotify-clone-be.herokuapp.com/login", { code })
       .then((res) => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
         window.history.pushState({}, null, "/");
       })
-      .catch(() => {
+      .catch((err) => {
         window.location = "/";
       });
   }, [code]);
@@ -24,7 +24,9 @@ export default function useAuth(code) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
       axios
-        .post("http://localhost:3001/refresh", { refreshToken })
+        .post("https://spotify-clone-be.herokuapp.com/refresh", {
+          refreshToken,
+        })
         .then((res) => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);

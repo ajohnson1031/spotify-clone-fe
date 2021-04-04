@@ -1,0 +1,39 @@
+#root,
+body,
+html {
+  background-color: black;
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("./fonts/CircularSpotify-UI-Latin-OS2v3-Book.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Circular-Bold";
+  src: url("./fonts/CircularSpotify-UI-Latin-OS2v3-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Circular-Black";
+  src: url("./fonts/CircularSpotify-UI-Latin-OS2v3-Black.woff2") format("woff2");
+}
+
+.form-control,
+.form-control:focus {
+  background-color: black;
+  color: white;
+  border-color: #999;
+}
+
+::placeholder {
+  color: #ccc;
+}
+
+.lyrics {
+  color: white;
+}
+
+.close {
+  color: red;
+}

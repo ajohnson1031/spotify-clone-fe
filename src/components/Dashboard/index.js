@@ -22,7 +22,9 @@ const Dashboard = ({ code }) => {
 
   useEffect(() => {
     async function res() {
-      const res = await axios.get("http://localhost:3001/getID");
+      const res = await axios.get(
+        "https://spotify-clone-be.herokuapp.com/getID"
+      );
       return setSpotifyApi(
         new SpotifyWebApi({
           clientId: res.data.clientId,
@@ -32,19 +34,21 @@ const Dashboard = ({ code }) => {
     res();
   }, []);
 
-  // const spotifyApi = ;
-
   useEffect(() => {
     if (!playingTrack) return;
     axios
-      .get("http://localhost:3001/lyrics", {
+      .get("https://spotify-clone-be.herokuapp.com/lyrics", {
         params: {
           track: playingTrack.title,
           artist: playingTrack.artist,
         },
       })
       .then((res) => {
-        setLyrics(res.data.lyrics);
+        setLyrics({
+          lyrics: res.data.lyrics,
+          track: res.data.track,
+          artist: res.data.artist,
+        });
       });
   }, [playingTrack]);
 
@@ -84,10 +88,11 @@ const Dashboard = ({ code }) => {
   return (
     <Container className='d-flex flex-column py-2' style={{ height: "100vh" }}>
       <Form.Control
-        type='search'
+        type='text'
         placeholder='Search Songs/Artists'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        style={{ padding: 10 }}
       />
       <div className='flex-grow-1 my-2' style={{ overflowY: "auto" }}>
         {searchResults.map((track) => {
@@ -100,8 +105,30 @@ const Dashboard = ({ code }) => {
           );
         })}
         {!searchResults.length && (
-          <div className='text-center' style={{ whiteSpace: "pre" }}>
-            {lyrics}
+          <div
+            className='text-center lyrics'
+            style={{ whiteSpace: "pre", paddingTop: 20, paddingBottom: 20 }}
+          >
+            {lyrics.track && (
+              <div
+                style={{
+                  borderBottom: 1,
+                  borderTop: 0,
+                  borderLeft: 0,
+                  borderRight: 0,
+                  borderColor: "yellowgreen",
+                  borderStyle: "solid",
+                  width: "fit-content",
+                  marginBottom: "1rem",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              >
+                <h2 style={{ marginBottom: 0 }}>{lyrics.track}</h2>
+                <p style={{ marginBottom: 0 }}>by: {lyrics.artist}</p>
+              </div>
+            )}
+            <p>{lyrics.lyrics}</p>
           </div>
         )}
       </div>
